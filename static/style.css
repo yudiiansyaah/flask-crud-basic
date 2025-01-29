@@ -2,6 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    /* Added to prevent scrollbar on body, if no other elements take up more space than needed*/
+    min-height: 100vh;
+    /* Added flexbox to push the footer to the bottom of the page if the page content is not long enough*/
+    display: flex;
+    flex-direction: column;
 }
 
 .current-photo img {
@@ -14,6 +19,7 @@ body {
 .alert {
     margin-bottom: 20px;
 }
+
 .alert.alert-error {
     background-color: #f8d7da;
     color: #721c24;
@@ -24,4 +30,46 @@ body {
     background-color: #d4edda;
     color: #155724;
     border-color: #c3e6cb;
+}
+
+
+/* --- Responsive design using media queries --- */
+
+/* Styles for small screens (phones - less than 768px) */
+@media (max-width: 767px) {
+
+    /* Make tables responsive */
+  .table-responsive {
+    overflow-x: auto; /* Allow horizontal scrolling on small screens */
+  }
+  .table th,
+  .table td {
+    white-space: nowrap; /* Prevent long content from wrapping to new lines*/
+  }
+
+    /* Adjust image sizes for small screens */
+    .current-photo img {
+        max-width: 100%; /* Make photo fill the container width */
+        height: auto;
+    }
+}
+
+/* Styles for medium screens (tablets - 768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .current-photo img {
+        max-width: 150px; /* Display photos smaller on tablets */
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+/* Styles for large screens (desktops - 992px and up)*/
+@media (min-width: 992px) {
+    .current-photo img {
+        max-width: 200px; /* Keep photos at a specific size for larger screens */
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+    }
 }
