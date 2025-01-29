@@ -44,10 +44,9 @@ This is a basic web application built with Flask, designed to manage a list of s
 1.  **Clone the Repository:**
 
     ```bash
-    git clone [your-repo-url]
-    cd [your-repo-name]
+    git clone https://github.com/yudiiansyaah/flask-crud-basic.git
+    cd flask-crud-basic
     ```
-    (Replace `[your-repo-url]` and `[your-repo-name]` with your repository URL and name.)
 
 2.  **Create a Virtual Environment (Recommended):**
 
