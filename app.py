@@ -8,16 +8,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from datetime import datetime, timedelta
 
-# Flask-Uploads Configuration
 photos = UploadSet('photos', IMAGES)
 app = Flask(__name__)
-csrf = CSRFProtect(app)  # CSRF Protection
+csrf = CSRFProtect(app) 
 app.config['UPLOADED_PHOTOS_DEST'] = 'static/uploads'
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'secretkey123')  # Use environment variable
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'secretkey123') 
 configure_uploads(app, photos)
 
-# Database Connection
-DATABASE_PATH = os.path.abspath('/home/yuds/Flask/siswa.db')  # Use absolute path
+DATABASE_PATH = os.path.abspath('/home/yuds/Flask/siswa.db')
 print(f"Database Path: {DATABASE_PATH}")
 
 
@@ -25,7 +23,7 @@ def get_db():
     print("Attempting to connect to the database...")
     try:
         db = sqlite3.connect(DATABASE_PATH)
-        db.row_factory = sqlite3.Row  # Access columns by name
+        db.row_factory = sqlite3.Row 
         print("Database connection successful.")
         return db
     except sqlite3.Error as e:
@@ -33,7 +31,6 @@ def get_db():
         raise
 
 
-# Initialize Database (Create if not exists)
 def init_db():
     try:
         with get_db() as db:
@@ -65,7 +62,6 @@ def init_db():
 
 init_db()
 
-# File Validation Function
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 
@@ -73,14 +69,13 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# Authentication helper function
 def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
 
-    decorated_function.__name__ = f.__name__  # Preserve function name for flask
+    decorated_function.__name__ = f.__name__ 
     return decorated_function
 
 
@@ -107,17 +102,15 @@ def add_siswa():
             flash('Name must be at least 3 characters!', 'error')
             return redirect(url_for('add_siswa'))
 
-        # Age Validation
         try:
             age = int(age)
-            if age < 10 or age > 50:  # Add range check
+            if age < 10 or age > 50: 
                 flash('Age must be between 10 and 50!', 'error')
                 return redirect(url_for('add_siswa'))
         except ValueError:
             flash('Age must be a positive number!', 'error')
             return redirect(url_for('add_siswa'))
 
-        # Photo Validation
         if not photo or photo.filename == '':
             flash('Photo must be uploaded!', 'error')
             return redirect(url_for('add_siswa'))
@@ -138,7 +131,6 @@ def add_siswa():
             flash('Failed to upload photo.', 'error')
             return redirect(url_for('add_siswa'))
 
-        # Save to Database
         db = get_db()
         try:
             db.execute(
@@ -148,7 +140,7 @@ def add_siswa():
             db.commit()
             flash('Student added successfully!', 'success')
             return redirect(url_for('index'))
-        except sqlite3.Error as e:  # Specific exception for database errors
+        except sqlite3.Error as e: 
             db.rollback()
             flash(f'An error occurred while saving data: {e}', 'error')
             return redirect(url_for('add_siswa'))
@@ -173,22 +165,19 @@ def update_siswa(index):
         delete_photo = request.form.get('delete_photo')
         photo_path = siswa['photo_path']
 
-        # Name Validation
         if len(name) < 3:
             flash('Name must be at least 3 characters!', 'error')
             return redirect(url_for('update_siswa', index=index))
 
-        # Age Validation
         try:
             age = int(age)
-            if age < 10 or age > 50:  # Add range check
+            if age < 10 or age > 50: 
                 flash('Age must be between 10 and 50!', 'error')
                 return redirect(url_for('update_siswa', index=index))
         except ValueError:
             flash('Age must be a positive number!', 'error')
             return redirect(url_for('update_siswa', index=index))
 
-        # Handle Photo Deletion
         if delete_photo:
             if siswa['photo_path']:
                 try:
@@ -197,7 +186,6 @@ def update_siswa(index):
                     flash('Failed to delete old photo.', 'error')
             photo_path = None
 
-        # Handle New Photo Upload
         if photo and photo.filename != '':
             if not allowed_file(photo.filename):
                 flash('File format not supported! (Only JPG/PNG)', 'error')
@@ -214,7 +202,6 @@ def update_siswa(index):
                 flash('Failed to upload new photo.', 'error')
                 return redirect(url_for('update_siswa', index=index))
 
-        # Update Database
         try:
             db.execute(
                 "UPDATE students SET name = ?, age = ?, photo_path = ? WHERE id = ?",
@@ -269,17 +256,14 @@ def register():
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
 
-        # Basic Username Validation
         if not username or len(username) < 3:
             flash('Username must be at least 3 characters', 'error')
             return redirect(url_for('register'))
 
-        # Basic Password validation
         if not password or len(password) < 6:
             flash('Password must be at least 6 characters', 'error')
             return redirect(url_for('register'))
 
-        # Confirm password validation
         if password != confirm_password:
             flash('Passwords do not match', 'error')
             return redirect(url_for('register'))
@@ -344,19 +328,19 @@ def forgot_password():
 
         if user:
             reset_token = secrets.token_urlsafe(32)
-            expiry = datetime.now() + timedelta(hours=1)  # Reset token expires in 1 hour
+            expiry = datetime.now() + timedelta(hours=1)  
 
             try:
                 db.execute("UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE id = ?",
                         (reset_token, expiry, user['id']))
                 db.commit()
                 flash('A password reset link has been sent to your email.', 'success')
-                return redirect(url_for('login'))  # Redirect to login page after reset token has been generated
+                return redirect(url_for('login'))  
             except sqlite3.Error as e:
                 db.rollback()
                 flash(f'Error creating reset token: {e}', 'error')
         else:
-            flash('Username does not exist', 'error')  # Inform user if username doesn't exist
+            flash('Username does not exist', 'error')  
         db.close()
 
     return render_template('forgot_password.html')
@@ -384,7 +368,7 @@ def reset_password(token):
                     (new_password_hash, user['id']))
             db.commit()
             flash('Your password has been reset, you can log in now', 'success')
-            return redirect(url_for('login'))  # Redirect to login page after password reset
+            return redirect(url_for('login'))  
         except sqlite3.Error as e:
             db.rollback()
             flash(f'Error during password update {e}', 'error')
