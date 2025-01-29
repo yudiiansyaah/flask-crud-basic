@@ -2,9 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /* Added to prevent scrollbar on body, if no other elements take up more space than needed*/
     min-height: 100vh;
-    /* Added flexbox to push the footer to the bottom of the page if the page content is not long enough*/
     display: flex;
     flex-direction: column;
 }
@@ -33,41 +31,34 @@ body {
 }
 
 
-/* --- Responsive design using media queries --- */
 
-/* Styles for small screens (phones - less than 768px) */
 @media (max-width: 767px) {
 
-    /* Make tables responsive */
   .table-responsive {
-    overflow-x: auto; /* Allow horizontal scrolling on small screens */
-  }
+    overflow-x: auto; 
   .table th,
   .table td {
-    white-space: nowrap; /* Prevent long content from wrapping to new lines*/
+    white-space: nowrap; 
   }
 
-    /* Adjust image sizes for small screens */
     .current-photo img {
-        max-width: 100%; /* Make photo fill the container width */
+        max-width: 100%; 
         height: auto;
     }
 }
 
-/* Styles for medium screens (tablets - 768px to 991px) */
 @media (min-width: 768px) and (max-width: 991px) {
     .current-photo img {
-        max-width: 150px; /* Display photos smaller on tablets */
+        max-width: 150px; 
         height: auto;
         display: block;
         margin-bottom: 10px;
     }
 }
 
-/* Styles for large screens (desktops - 992px and up)*/
 @media (min-width: 992px) {
     .current-photo img {
-        max-width: 200px; /* Keep photos at a specific size for larger screens */
+        max-width: 200px; 
         height: auto;
         display: block;
         margin-bottom: 10px;
