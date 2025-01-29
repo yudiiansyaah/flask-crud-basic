@@ -3,11 +3,11 @@
 This is a basic web application built with Flask, designed to manage a list of students. It allows you to add, update, and delete student records, including their name, age, and photo. The application also includes user authentication with registration, login, logout, and password reset functionalities.
 
 ## Screenshoot
-[**Home**](static/uploads/home.png)
-[**Edit Data**](static/uploads/edit.png)
-[**Login**](static/uploads/login.png)
-[**Register**](static/uploads/register.png)
-[**Forget Password**](static/uploads/forgot.png)
+![**Home**](static/uploads/home.png)
+![**Edit Data**](static/uploads/edit.png)
+![**Login**](static/uploads/login.png)
+![**Register**](static/uploads/register.png)
+![**Forget Password**](static/uploads/forgot.png)
 
 ## Features
 
