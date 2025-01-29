@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+    <h1>Student List</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Photo</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if siswa %}
+                    {% for s in siswa %}
+                        <tr>
+                            <td>{{ s.name }}</td>
+                            <td>{{ s.age }}</td>
+                            <td>
+                                {% if s.photo_path %}
+                                    <img src="{{ url_for('static', filename='uploads/' + s.photo_path) }}" alt="Student Photo" style="max-width: 100px; height: auto;">
+                                {% else %}
+                                    No Photo
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('update_siswa', index=s.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                <form method="POST" action="{{ url_for('delete_siswa', index=s.id) }}" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this record?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">No data found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

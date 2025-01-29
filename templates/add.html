@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Student{% endblock %}
+
+{% block content %}
+    <h1>Add Student</h1>
+    <form method="POST" action="{{ url_for('add_siswa') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group">
+            <label for="photo">Profile Photo:</label>
+            <input type="file" class="form-control-file" id="photo" name="photo" accept="image/*" required>
+            <small class="form-text text-muted">Maximum 2MB (Format: JPG/PNG)</small>
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Example: Budi Santoso" required>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" class="form-control" id="age" name="age" min="10" max="50" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

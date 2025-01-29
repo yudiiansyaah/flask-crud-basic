@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Student{% endblock %}
+
+{% block content %}
+    <h1>Edit Student</h1>
+
+    {% if siswa.photo_path %}
+        <div class="current-photo mb-3">
+            <p>Current Photo:</p>
+            <img src="{{ url_for('static', filename='uploads/' + siswa.photo_path) }}" alt="Current Photo" style="max-width: 200px; height: auto;">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="delete_photo" value="yes" id="deletePhoto">
+                <label class="form-check-label" for="deletePhoto">Delete Photo</label>
+            </div>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('update_siswa', index=siswa.id) }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group">
+            <label for="photo">New Profile Photo:</label>
+            <input type="file" class="form-control-file" id="photo" name="photo" accept="image/*">
+            <small class="form-text text-muted">Maximum 2MB (Format: JPG/PNG)</small>
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ siswa.name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" class="form-control" id="age" name="age" value="{{ siswa.age }}" min="10" max="50" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}
