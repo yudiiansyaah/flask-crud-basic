@@ -1,52 +1,56 @@
-# Flask Student Management Application
+# 🎓 Flask Student Management Application
 
-This is a basic web application built with Flask, designed to manage a list of students. It allows you to add, update, and delete student records, including their name, age, and photo. The application also includes user authentication with registration, login, logout, and password reset functionalities.
+A modern web application built with Flask to manage student records efficiently. Features CRUD operations, user authentication, and secure photo uploads. 
 
-## Screenshoot
-### HOME
-![**Home**](static/uploads/home.png)
-### Edit Data
-![**Edit Data**](static/uploads/edit.png)
-### Login
-![**Login**](static/uploads/login.png)
-### Register
-![**Register**](static/uploads/register.png)
-### Forget Password
-![**Forget Password**](static/uploads/forgot.png)
+![Flask](https://img.shields.io/badge/Flask-2.0.1-%23000.svg?logo=flask)
+![Python](https://img.shields.io/badge/Python-3.6%2B-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## Features
+## 📸 Screenshots
 
--   **Student Management:**
-    -   Add new student records, including their name, age, and profile photo.
-    -   View a list of all students.
-    -   Update existing student information.
-    -   Delete student records.
--   **User Authentication:**
-    -   User registration.
-    -   Secure user login.
-    -   User logout.
-    -   Password reset functionality via a reset token.
--   **Photo Uploads:**
-    -   Upload profile photos for students (JPG/JPEG/PNG formats supported, maximum size 2MB).
--   **Database:**
-    - Uses SQLite for data storage.
--   **Security:**
-    - CSRF protection is implemented for forms.
-    - Password hashing is used for user security.
+| **Home** | **Edit Student** | **Login** |
+|----------|------------------|-----------|
+| ![Home](static/uploads/home.png) | ![Edit](static/uploads/edit.png) | ![Login](static/uploads/login.png) |
 
-## Prerequisites
+| **Register** | **Forgot Password** |
+|--------------|---------------------|
+| ![Register](static/uploads/register.png) | ![Forgot](static/uploads/forgot.png) |
 
--   Python 3.6+
--   pip (Python package manager)
+## ✨ Features
 
-## Setup
+### 🧑🎓 Student Management
+- **Add** new students with name, age, and profile photo
+- **View** all students in a clean table layout
+- **Edit** existing student information
+- **Delete** student records permanently
 
-1.  **Clone the Repository:**
+### 🔐 User Authentication
+- Secure **user registration** with email validation
+- **Login/Logout** functionality with session management
+- **Password reset** via token-based email system
+- Password hashing using **bcrypt**
 
-    ```bash
-    git clone https://github.com/yudiiansyaah/flask-crud-basic.git
-    cd flask-crud-basic
-    ```
+### 🖼️ Media Handling
+- Upload student photos (JPG/JPEG/PNG, max 2MB)
+- Automatic image thumbnail generation
+- Secure file storage in `static/uploads`
+
+### 🛡️ Security
+- CSRF protection for all forms
+- SQLite database with parameterized queries
+- Session-based authentication
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.6+
+- pip package manager
+
+### Installation
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/yudiiansyaah/flask-crud-basic.git
+   cd flask-crud-basic
 
 2.  **Create a Virtual Environment (Recommended):**
 
@@ -91,20 +95,23 @@ The application uses SQLite to store data. The database file `siswa.db` is creat
 
 ## Project Structure
 ```
-├── app.py # Main Flask application file
-├── siswa.db # SQLite database file
-├── static
-│ └── uploads # Directory to store uploaded images
-│ └── style.css # CSS Stylesheet for styling
-└── templates
-├── add.html # Add student template
-├── base.html # Base HTML template
-├── forgot_password.html # Password reset template
-├── index.html # Main student listing template
-├── login.html # Login template
-├── register.html # Register template
-├── reset_password.html # Reset Password template
-└── update.html # Update student template
+flask-crud-basic/
+├── app.py                 # Main application entry
+├── siswa.db               # SQLite database
+├── requirements.txt       # Dependencies
+├── static/
+│   ├── uploads/           # Student photos storage
+│   └── style.css          # Custom CSS styles
+└── templates/
+    ├── base.html          # Master template
+    ├── index.html         # Student listing
+    ├── {add,update}.html  # CRUD operations
+    └── auth/              # Authentication templates
+        ├── login.html
+        ├── register.html
+        └── password_reset/
+            ├── forgot.html
+            └── reset.html
 ```
 
 
